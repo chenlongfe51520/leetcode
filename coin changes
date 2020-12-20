@@ -1,3 +1,8 @@
+//dp方式
+//执行用时：136 ms, 在所有 C++ 提交中击败了59.62%的用户
+//内存消耗：14.2 MB, 在所有 C++ 提交中击败了26.65%的用户
+class Solution {
+public:
     int coinChange(vector<int>& coins, int amount) {
         vector<int> dp(amount+1, amount+1);
         dp[0] = 0;
@@ -12,3 +17,39 @@
         }
         return (dp[amount] == amount + 1)? -1: dp[amount];
     }
+};
+
+//递归方式、增加cache
+//执行用时：1396 ms, 在所有 C++ 提交中击败了5.21%的用户
+//内存消耗：60 MB, 在所有 C++ 提交中击败了5.01%的用户
+class Solution {
+public:
+    std::unordered_map<int, int> pairs;
+    int helper(vector<int>& coins, int amount) {
+        if(amount < 0) {
+            return -1;
+        }
+        if(amount == 0) {
+            return 0;
+        }
+        if(pairs.find(amount) != pairs.end()) {
+            return pairs[amount];
+        }
+        int res = INT_MAX;
+        for(int i = 0;i < coins.size(); ++i) {
+            if(amount - coins[i] < 0) {
+                continue;
+            }
+            int subproblem = helper(coins, amount-coins[i]);
+            if(subproblem == -1) {
+                continue;
+            }
+            res = std::min(res, 1+subproblem);
+        }
+        pairs.emplace(amount,res != INT_MAX? res:-1);
+        return res != INT_MAX? res:-1;
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        return helper(coins, amount);
+    }
+};
