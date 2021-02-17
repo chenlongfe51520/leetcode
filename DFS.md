@@ -51,6 +51,7 @@ void dfs(TreeNode* node, std::vector<int> &path, int sum, std::vector<std::vecto
 ~~~
 
 # case 78 求子集
+核心是把函数递归调用图，入参画出来，就很清楚了。
 ~~~C++
 class Solution {
 public:
