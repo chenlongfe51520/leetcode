@@ -50,7 +50,7 @@ void dfs(TreeNode* node, std::vector<int> &path, int sum, std::vector<std::vecto
 }
 ~~~
 
-# case 3 78求子集
+# case 78 求子集
 ~~~C++
 class Solution {
 public:
@@ -61,9 +61,9 @@ public:
         }
         track.push_back(nums[index]);
         ans.push_back(track);
-        backtrack(nums, index+1, track);
+        backtrack(nums, index+1, track);  //增加是一种选择
         track.pop_back();
-        backtrack(nums,index+1, track);
+        backtrack(nums,index+1, track);   //不增加也是一种选择，不增加的话，就有单个的状态了。
     }
 
     vector<vector<int>> subsets(vector<int>& nums) {
